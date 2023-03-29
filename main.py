@@ -14,7 +14,17 @@ def get_image(url, path):
         file.write(response.content)
 
 
+def get_images_links(id):
+
+    response = requests.get(f'https://api.spacexdata.com/v5/launches/{id}')
+
+    return response.json()['links']['flickr']['original']
+
+
 if __name__ == "__main__":
-    url = 'https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg'
-    path = 'images/hubble.jpg'
-    get_image(url, path)
+
+    id = '61eefaa89eb1064137a1bd73'
+
+  #  for index, link in enumerate(get_image_links(id)):
+  #      get_image(link)
+    print(get_images_links(id))
