@@ -1,3 +1,5 @@
+import urllib.parse
+
 import requests
 import os
 
@@ -24,5 +26,10 @@ def fetch_spacex_launch(flight_id='61eefaa89eb1064137a1bd73'):
         get_image(link, f'images/spacex_{index}.jpg')
 
 
+def get_file_extension(url):
+    path = urllib.parse.urlsplit(url).path
+    return os.path.splitext(path)[1]
+
+
 if __name__ == "__main__":
-    fetch_spacex_launch()
+    print(get_file_extention('https://example.com/txt/hello%20world.txt?v=9#python'))
