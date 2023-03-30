@@ -14,17 +14,15 @@ def get_image(url, path):
         file.write(response.content)
 
 
-def get_images_links(id):
+def fetch_spacex_launch(flight_id='61eefaa89eb1064137a1bd73'):
 
-    response = requests.get(f'https://api.spacexdata.com/v5/launches/{id}')
+    response = requests.get(f'https://api.spacexdata.com/v5/launches/{flight_id}')
 
-    return response.json()['links']['flickr']['original']
+    links = response.json()['links']['flickr']['original']
+
+    for index, link in enumerate(links):
+        get_image(link, f'images/spacex_{index}')
 
 
 if __name__ == "__main__":
-
-    id = '61eefaa89eb1064137a1bd73'
-
-  #  for index, link in enumerate(get_image_links(id)):
-  #      get_image(link)
-    print(get_images_links(id))
+    fetch_spacex_launch()
