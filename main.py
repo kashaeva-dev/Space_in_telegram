@@ -2,6 +2,7 @@ import urllib.parse
 
 import requests
 import os
+from dotenv import load_dotenv, find_dotenv
 
 
 def get_image(url, path):
@@ -18,13 +19,40 @@ def get_image(url, path):
 
 def fetch_spacex_launch(flight_id='61eefaa89eb1064137a1bd73'):
 
-    response = requests.get(f'https://api.spacexdata.com/v5/launches/{flight_id}')
+    url = f'https://api.spacexdata.com/v5/launches/{flight_id}'
+    launch_data = requests.get(url)
+    launch_data.raise_for_status()
 
-    links = response.json()['links']['flickr']['original']
+    urls = launch_data.json()['links']['flickr']['original']
 
-    for index, link in enumerate(links):
-        get_image(link, f'images/spacex_{index}.jpg')
+    for index, url in enumerate(urls):
+        extension = get_file_extension(url)
+        get_image(url, f'images/spacex_{index}{extension}')
 
+
+def fetch_nasa_apod(count=50):
+
+    request_url = 'https://api.nasa.gov/planetary/apod'
+
+    params = {
+        "count": count,
+        "api_key": nasa_token,
+    }
+
+    photo_data = requests.get(request_url, params=params)
+    photo_data.raise_for_status()
+
+    urls = []
+    for photo in photo_data.json():
+        if photo['media_type'] == 'image':
+            urls.append(photo['hdurl'])
+
+    for index, url in enumerate(urls):
+        extension = get_file_extension(url)
+        try:
+            get_image(url, f'images/nasa_apod_{index}{extension}')
+        except requests.exceptions.HTTPError:
+            continue
 
 def get_file_extension(url):
     path = urllib.parse.urlsplit(url).path
@@ -32,4 +60,12 @@ def get_file_extension(url):
 
 
 if __name__ == "__main__":
-    print(get_file_extention('https://example.com/txt/hello%20world.txt?v=9#python'))
+
+    load_dotenv(find_dotenv())
+
+    try:
+        nasa_token = os.environ['NASA_API']
+    except KeyError:
+        print('Не удается найти переменную окружения NASA_API')
+
+    fetch_nasa_apod()
