@@ -1,7 +1,8 @@
+import datetime
+import os
 import urllib.parse
 
 import requests
-import os
 from dotenv import load_dotenv, find_dotenv
 
 
@@ -30,13 +31,13 @@ def fetch_spacex_launch(flight_id='61eefaa89eb1064137a1bd73'):
         get_image(url, f'images/spacex_{index}{extension}')
 
 
-def fetch_nasa_apod(count=50):
+def fetch_nasa_apod(token, count=50):
 
     request_url = 'https://api.nasa.gov/planetary/apod'
 
     params = {
         "count": count,
-        "api_key": nasa_token,
+        "api_key": token,
     }
 
     photo_data = requests.get(request_url, params=params)
@@ -54,12 +55,33 @@ def fetch_nasa_apod(count=50):
         except requests.exceptions.HTTPError:
             continue
 
+
 def get_file_extension(url):
     path = urllib.parse.urlsplit(url).path
     return os.path.splitext(path)[1]
 
 
-if __name__ == "__main__":
+def fetch_nasa_epic(token):
+
+    today = datetime.datetime.today()
+    yesterday = today - datetime.timedelta(days=1)
+
+    request_url = f'https://api.nasa.gov/EPIC/api/natural/date/{yesterday.strftime("%Y-%m-%d")}?api_key={token}'
+    response = requests.get(request_url)
+    response.raise_for_status()
+
+    epic_photo_information = response.json()
+    epic_ids = []
+    for photo in epic_photo_information:
+        epic_ids.append(photo['image'])
+
+    for index, id in enumerate(epic_ids):
+
+        url = f'https://api.nasa.gov/EPIC/archive/natural/{yesterday.year}/{yesterday.month:02d}/{yesterday.day}/png/{id}.png?api_key={token}'
+        get_image(url, f'images/nasa_epic_{index}.png')
+
+
+def main():
 
     load_dotenv(find_dotenv())
 
@@ -68,4 +90,8 @@ if __name__ == "__main__":
     except KeyError:
         print('Не удается найти переменную окружения NASA_API')
 
-    fetch_nasa_apod()
+    fetch_nasa_epic(nasa_token)
+
+
+if __name__ == "__main__":
+    main()
