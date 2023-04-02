@@ -1,11 +1,9 @@
 import argparse
-import os
 
 import requests
-from dotenv import load_dotenv, find_dotenv
 
 from file_processing import get_image, get_file_extension
-from env import get_nasa_token
+from environment import get_nasa_token
 
 
 def fetch_nasa_apod(token, count=50):
@@ -36,8 +34,8 @@ def fetch_nasa_apod(token, count=50):
 def create_parser():
     parser = argparse.ArgumentParser(
         prog="NASA APOD images",
-        description='The "NASA APOD images" program allows you to download'
-                    'the specifyed number of images from Astronomy Picture of the Day'
+        description='The "NASA APOD images" program allows you to download '
+                    'the specifyed number of images from Astronomy Picture of the Day '
                     'website'
     )
     parser.add_argument(

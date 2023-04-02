@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv, find_dotenv
 
-def get_nasa_token():
 
+def get_nasa_token():
     load_dotenv(find_dotenv())
 
     try:

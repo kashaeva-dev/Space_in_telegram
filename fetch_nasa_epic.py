@@ -2,7 +2,7 @@ import argparse
 import datetime
 
 import requests
-from env import get_nasa_token
+from environment import get_nasa_token
 
 from file_processing import get_image
 
@@ -31,7 +31,7 @@ def create_parser():
 
     parser = argparse.ArgumentParser(
         prog='NASA EPIC images',
-        description='The "NASA EPIC images" program allows you to download'
+        description='The "NASA EPIC images" program allows you to download '
              'EPIC Earth images that were made yesterday',
     )
     return parser
