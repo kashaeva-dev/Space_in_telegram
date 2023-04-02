@@ -53,7 +53,8 @@ def main():
     user_input = parser.parse_args()
 
     count = user_input.count
-    fetch_nasa_apod(nasa_token, count)
+    if nasa_token:
+        fetch_nasa_apod(nasa_token, count)
 
 
 if __name__ == "__main__":

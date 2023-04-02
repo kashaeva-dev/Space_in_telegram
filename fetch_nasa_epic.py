@@ -23,7 +23,7 @@ def fetch_nasa_epic(token):
 
     for index, id in enumerate(epic_ids):
 
-        url = f'https://api.nasa.gov/EPIC/archive/natural/{yesterday.year}/{yesterday.month:02d}/{yesterday.day}/png/{id}.png?api_key={token}'
+        url = f'https://api.nasa.gov/EPIC/archive/natural/{yesterday.year}/{yesterday.month:02d}/{yesterday.day:02d}/png/{id}.png?api_key={token}'
         get_image(url, f'images/nasa_epic_{index}.png')
 
 
@@ -38,13 +38,13 @@ def create_parser():
 
 
 def main():
-
     parser = create_parser()
     user_input = parser.parse_args()
 
     nasa_token = get_nasa_token()
 
-    fetch_nasa_epic(nasa_token)
+    if nasa_token:
+        fetch_nasa_epic(nasa_token)
 
 
 if __name__ == "__main__":
