@@ -25,6 +25,7 @@ def fetch_nasa_apod(token, count=50):
 
     for index, url in enumerate(urls):
         extension = get_file_extension(url)
+        """Without this try-except block program is interrupted if it is impossible to get the image"""
         try:
             get_image(url, f'images/nasa_apod_{index}{extension}')
         except requests.exceptions.HTTPError:
@@ -36,7 +37,7 @@ def create_parser():
         prog="NASA APOD images",
         description='The "NASA APOD images" program allows you to download '
                     'the specifyed number of images from Astronomy Picture of the Day '
-                    'website'
+                    'website',
     )
     parser.add_argument(
         'count',
@@ -44,6 +45,7 @@ def create_parser():
         default=5,
     )
     return parser
+
 
 def main():
 

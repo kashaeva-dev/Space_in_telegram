@@ -21,9 +21,10 @@ def fetch_nasa_epic(token):
     for photo in epic_photo_information:
         epic_ids.append(photo['image'])
 
-    for index, id in enumerate(epic_ids):
+    for index, image_id in enumerate(epic_ids):
 
-        url = f'https://api.nasa.gov/EPIC/archive/natural/{yesterday.year}/{yesterday.month:02d}/{yesterday.day:02d}/png/{id}.png?api_key={token}'
+        url = f'https://api.nasa.gov/EPIC/archive/natural/' \
+              f'{yesterday.year}/{yesterday.month:02d}/{yesterday.day:02d}/png/{image_id}.png?api_key={token}'
         get_image(url, f'images/nasa_epic_{index}.png')
 
 
@@ -39,7 +40,7 @@ def create_parser():
 
 def main():
     parser = create_parser()
-    user_input = parser.parse_args()
+    parser.parse_args()
 
     nasa_token = get_nasa_token()
 

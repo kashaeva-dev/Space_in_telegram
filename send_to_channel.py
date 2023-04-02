@@ -29,7 +29,7 @@ def create_parser():
         It mixed photos in the specifyed directory and sends all of them constantly
         in the given interval of time. By default it is 4 hours. You can also specify
         the directory of the images. By default it is "images".
-        """
+        """,
     )
     parser.add_argument(
         'hours',
@@ -40,9 +40,10 @@ def create_parser():
     parser.add_argument(
         '-d', '--directory',
         help='you can specify the directory of the images',
-        default='images'
+        default='images',
     )
     return parser
+
 
 def main():
     parser = create_parser()
@@ -51,20 +52,20 @@ def main():
     hours = user_input.hours
     directory = user_input.directory
 
-    files=[]
+    images = []
 
-    for file in listdir(directory):
-        path = join(directory, file)
+    for image in listdir(directory):
+        path = join(directory, image)
         if isfile(path) and os.stat(path).st_size < 20971520:
-            files.append(file)
+            images.append(image)
 
     bot_token = get_bot_token()
     chat_id = get_chat_id()
     if bot_token and chat_id:
         while True:
-            random.shuffle(files)
-            for file in files:
-                send_image(join(directory, file), chat_id, bot_token)
+            random.shuffle(images)
+            for image in images:
+                send_image(join(directory, image), chat_id, bot_token)
             time.sleep(datetime.timedelta(hours=hours).total_seconds())
 
 
