@@ -1,24 +1,12 @@
 import argparse
 import datetime
-import os
 import random
 import time
-from os import listdir
-from os.path import isfile, join
+from os.path import join
 
-import telegram
-
+from bot import send_image
 from environment import get_bot_token, get_chat_id
-
-
-def send_message(text, chat_id, token):
-    bot = telegram.Bot(token)
-    bot.send_message(text=text, chat_id=chat_id)
-
-
-def send_image(path, chat_id, token):
-    bot = telegram.Bot(token=token)
-    bot.send_document(chat_id=chat_id, document=open(path, 'rb'), timeout=100)
+from file_processing import choose_images
 
 
 def create_parser():
@@ -52,17 +40,13 @@ def main():
     hours = user_input.hours
     directory = user_input.directory
 
-    images = []
-
-    for image in listdir(directory):
-        path = join(directory, image)
-        if isfile(path) and os.stat(path).st_size < 20971520:
-            images.append(image)
 
     bot_token = get_bot_token()
     chat_id = get_chat_id()
+
     if bot_token and chat_id:
         while True:
+            images = choose_images(directory)
             random.shuffle(images)
             for image in images:
                 send_image(join(directory, image), chat_id, bot_token)
