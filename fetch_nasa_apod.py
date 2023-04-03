@@ -40,9 +40,10 @@ def create_parser():
                     'website',
     )
     parser.add_argument(
-        'count',
+        '-c', '--count',
         help='You can specify the number of photos you want to be downloaded, by default it is 5',
         default=5,
+        type=int,
     )
     return parser
 

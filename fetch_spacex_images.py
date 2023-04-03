@@ -30,7 +30,7 @@ def create_parser():
                     'any ID.',
     )
     parser.add_argument(
-        'flight_id',
+        '-id', '--flight_id',
         help='You can specify the ID of a particular launch',
         default='latest',
     )

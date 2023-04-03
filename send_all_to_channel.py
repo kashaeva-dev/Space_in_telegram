@@ -20,7 +20,7 @@ def create_parser():
         """,
     )
     parser.add_argument(
-        'hours',
+        '-h', '--hours',
         help="you can change the time interval in which the photos are to be sent",
         default=4,
         type=int,
