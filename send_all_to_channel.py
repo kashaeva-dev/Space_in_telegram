@@ -40,7 +40,6 @@ def main():
     hours = user_input.hours
     directory = user_input.directory
 
-
     bot_token = get_bot_token()
     chat_id = get_chat_id()
 

@@ -2,8 +2,8 @@ import argparse
 import os
 import random
 
-from environment import get_bot_token, get_chat_id
 from bot import send_image
+from environment import get_bot_token, get_chat_id
 from file_processing import choose_images, is_correct_image
 
 
@@ -12,13 +12,14 @@ def create_parser():
         prog="Send one photo to a Telegram channel",
         description="""The scrip allows you to send one specifyed photo to a Telegram channel.
         If no photo specifyed it sends a random photo from "images" directory.
-        """
+        """,
     )
     parser.add_argument(
         '-f', '--filename',
         help="you can define particular photo in the 'image' directory to be sent",
     )
     return parser
+
 
 def main():
     bot_token = get_bot_token()
