@@ -58,9 +58,9 @@ def main():
     load_dotenv(find_dotenv())
 
     try:
-        nasa_api_token = os.environ['NASA_API']
+        nasa_api_token = os.environ['NASA_API_TOKEN']
     except KeyError:
-        print('Не получается найти переменную окружения NASA_API')
+        print('Не получается найти переменную окружения NASA_API_TOKEN')
     else:
         fetch_nasa_apod(nasa_api_token, count)
 
