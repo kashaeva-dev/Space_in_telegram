@@ -62,7 +62,7 @@ python fetch_nasa_epic.py
 
 This script allows you to download the images from a SpaceX launch. 
 By default, it downloads the images from the latest launch, but you can change it by specifying the flight_id argument.
-
+de
 ```
 python fetch_spacex_images.py [-id flight_id]
 ```
