@@ -16,13 +16,13 @@ def fetch_nasa_apod(token, count=50):
         "api_key": token,
     }
 
-    photo_data = requests.get(request_url, params=params)
-    photo_data.raise_for_status()
+    apods = requests.get(request_url, params=params)
+    apods.raise_for_status()
 
     urls = []
-    for photo in photo_data.json():
-        if photo['media_type'] == 'image':
-            urls.append(photo['url'])
+    for apod in apods.json():
+        if apod['media_type'] == 'image':
+            urls.append(apod['url'])
 
     for index, url in enumerate(urls):
         extension = get_file_extension(url)

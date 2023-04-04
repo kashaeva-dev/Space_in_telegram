@@ -17,10 +17,10 @@ def fetch_nasa_epic(token):
     response = requests.get(request_url)
     response.raise_for_status()
 
-    epic_photo_information = response.json()
+    epics_metadata = response.json()
     epic_ids = []
-    for photo in epic_photo_information:
-        epic_ids.append(photo['image'])
+    for epic in epics_metadata:
+        epic_ids.append(epic['image'])
 
     for index, image_id in enumerate(epic_ids):
 

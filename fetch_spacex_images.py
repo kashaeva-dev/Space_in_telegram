@@ -8,10 +8,10 @@ from file_processing import get_image, get_file_extension
 def fetch_spacex_launch(flight_id):
 
     url = f'https://api.spacexdata.com/v5/launches/{flight_id}'
-    launch_data = requests.get(url)
-    launch_data.raise_for_status()
+    response = requests.get(url)
+    response.raise_for_status()
 
-    urls = launch_data.json()['links']['flickr']['small']
+    urls = response.json()['links']['flickr']['small']
 
     if urls:
         for index, url in enumerate(urls):
