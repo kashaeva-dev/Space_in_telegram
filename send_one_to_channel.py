@@ -35,13 +35,13 @@ def main():
     load_dotenv(find_dotenv())
 
     try:
-        bot_token = os.environ['EPIC_SPACE_BOT_API']
+        telegram_bot_token = os.environ['EPIC_SPACE_BOT_API']
         chat_id = os.environ['CHAT_ID']
     except KeyError:
         print('Не получается найти переменную окружения CHAT_ID или EPIC_SPACE_BOT_API')
     else:
         print(f"Отправляю фото {path}")
-        send_image(path, chat_id, bot_token)
+        send_image(path, chat_id, telegram_bot_token)
 
 
 if __name__ == "__main__":
