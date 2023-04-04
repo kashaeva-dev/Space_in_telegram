@@ -1,8 +1,9 @@
 import argparse
 import datetime
+import os
 
 import requests
-from environment import get_nasa_token
+from dotenv import load_dotenv, find_dotenv
 
 from file_processing import get_image
 
@@ -42,9 +43,13 @@ def main():
     parser = create_parser()
     parser.parse_args()
 
-    nasa_token = get_nasa_token()
+    load_dotenv(find_dotenv())
 
-    if nasa_token:
+    try:
+        nasa_token = os.environ['NASA_API']
+    except KeyError:
+        print('Не получается найти переменную окружения NASA_API')
+    else:
         fetch_nasa_epic(nasa_token)
 
 

@@ -2,8 +2,9 @@ import argparse
 import os
 import random
 
+from dotenv import load_dotenv, find_dotenv
+
 from bot import send_image
-from environment import get_bot_token, get_chat_id
 from file_processing import choose_images, is_correct_image
 
 
@@ -22,9 +23,6 @@ def create_parser():
 
 
 def main():
-    bot_token = get_bot_token()
-    chat_id = get_chat_id()
-
     parser = create_parser()
     filename = parser.parse_args().filename
 
@@ -34,7 +32,14 @@ def main():
         images = choose_images('images')
         path = os.path.join('images', random.choice(images))
 
-    if bot_token and chat_id:
+    load_dotenv(find_dotenv())
+
+    try:
+        bot_token = os.environ['EPIC_SPACE_BOT_API']
+        chat_id = os.environ['CHAT_ID']
+    except KeyError:
+        print('Не получается найти переменную окружения CHAT_ID или EPIC_SPACE_BOT_API')
+    else:
         print(f"Отправляю фото {path}")
         send_image(path, chat_id, bot_token)
 

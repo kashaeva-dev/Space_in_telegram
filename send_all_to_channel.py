@@ -1,11 +1,13 @@
 import argparse
 import datetime
+import os
 import random
 import time
 from os.path import join
 
+from dotenv import load_dotenv, find_dotenv
+
 from bot import send_image
-from environment import get_bot_token, get_chat_id
 from file_processing import choose_images
 
 
@@ -40,10 +42,14 @@ def main():
     hours = user_input.hours
     directory = user_input.directory
 
-    bot_token = get_bot_token()
-    chat_id = get_chat_id()
+    load_dotenv(find_dotenv())
 
-    if bot_token and chat_id:
+    try:
+        bot_token = os.environ['EPIC_SPACE_BOT_API']
+        chat_id = os.environ['CHAT_ID']
+    except KeyError:
+        print('Не получается найти переменную окружения CHAT_ID или EPIC_SPACE_BOT_API')
+    else:
         while True:
             images = choose_images(directory)
             random.shuffle(images)

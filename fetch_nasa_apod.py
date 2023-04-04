@@ -1,9 +1,10 @@
 import argparse
+import os
 
 import requests
+from dotenv import load_dotenv, find_dotenv
 
 from file_processing import get_image, get_file_extension
-from environment import get_nasa_token
 
 
 def fetch_nasa_apod(token, count=50):
@@ -49,14 +50,18 @@ def create_parser():
 
 
 def main():
-
-    nasa_token = get_nasa_token()
-
     parser = create_parser()
     user_input = parser.parse_args()
 
     count = user_input.count
-    if nasa_token:
+
+    load_dotenv(find_dotenv())
+
+    try:
+        nasa_token = os.environ['NASA_API']
+    except KeyError:
+        print('Не получается найти переменную окружения NASA_API')
+    else:
         fetch_nasa_apod(nasa_token, count)
 
 
