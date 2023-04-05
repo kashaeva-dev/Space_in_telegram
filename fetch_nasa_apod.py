@@ -26,7 +26,6 @@ def fetch_nasa_apod(token, count=50):
 
     for index, url in enumerate(urls):
         extension = get_file_extension(url)
-        """Without this try-except block program is interrupted if it is impossible to get the image"""
         try:
             get_image(url, f'images/nasa_apod_{index}{extension}')
         except requests.exceptions.HTTPError:
