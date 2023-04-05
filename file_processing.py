@@ -22,8 +22,7 @@ def get_file_extension(url):
 
 
 def is_correct_image(path):
-    if os.path.isfile(path) and filetype.is_image(path) and os.stat(path).st_size < 20971520:
-        return True
+    return os.path.isfile(path) and filetype.is_image(path) and os.stat(path).st_size < 20971520
 
 
 def choose_images(directory):

@@ -29,20 +29,7 @@ def fetch_nasa_epic(token):
         get_image(url, f'images/nasa_epic_{index}.png')
 
 
-def create_parser():
-
-    parser = argparse.ArgumentParser(
-        prog='NASA EPIC images',
-        description='The "NASA EPIC images" program allows you to download '
-             'EPIC Earth images that were made yesterday',
-    )
-    return parser
-
-
 def main():
-    parser = create_parser()
-    parser.parse_args()
-
     load_dotenv(find_dotenv())
 
     try:
