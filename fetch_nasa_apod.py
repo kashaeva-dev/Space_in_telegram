@@ -1,5 +1,6 @@
 import argparse
 import os
+from contextlib import suppress
 
 import requests
 from dotenv import load_dotenv, find_dotenv
@@ -26,10 +27,8 @@ def fetch_nasa_apod(token, count=50):
 
     for index, url in enumerate(urls):
         extension = get_file_extension(url)
-        try:
+        with suppress(requests.exceptions.HTTPError):
             get_image(url, f'images/nasa_apod_{index}{extension}')
-        except requests.exceptions.HTTPError:
-            continue
 
 
 def create_parser():
