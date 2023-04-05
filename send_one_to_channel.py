@@ -40,7 +40,6 @@ def main():
     except KeyError:
         print('Не получается найти переменную окружения TG_CHAT_ID или EPIC_SPACE_BOT_API')
     else:
-        print(f"Отправляю фото {path}")
         send_image(path, tg_chat_id, tg_bot_token)
 
 

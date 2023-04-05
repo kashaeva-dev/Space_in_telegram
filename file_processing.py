@@ -4,9 +4,8 @@ import os
 import urllib
 
 
-def get_image(url, path):
-
-    response = requests.get(url)
+def get_image(url, params, path):
+    response = requests.get(url, params=params)
     response.raise_for_status()
 
     directory, filename = os.path.split(os.path.splitext(path)[0])
