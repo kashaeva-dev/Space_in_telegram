@@ -45,10 +45,10 @@ def main():
     load_dotenv(find_dotenv())
 
     try:
-        tg_bot_token = os.environ['EPIC_SPACE_BOT_API']
+        tg_bot_token = os.environ['TG_EPIC_SPACE_BOT_API']
         tg_chat_id = os.environ['TG_CHAT_ID']
     except KeyError:
-        print('Не получается найти переменную окружения TG_CHAT_ID или EPIC_SPACE_BOT_API')
+        print('Не получается найти переменную окружения TG_CHAT_ID или TG_EPIC_SPACE_BOT_API')
     else:
         while True:
             images = choose_images(directory)
